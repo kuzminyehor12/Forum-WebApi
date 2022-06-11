@@ -8,7 +8,7 @@ namespace DAL.Interfaces
 {
     public interface IUserRepository : IRepo<User>
     {
-        Task<User> GetByIdWithDetailsAsync(int id);
         Task<IEnumerable<User>> GetAllWithDetailsAsync();
+        Task<User> GetByIdWithDetailsAsync(int id);
     }
 }

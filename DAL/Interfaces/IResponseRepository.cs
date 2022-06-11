@@ -9,7 +9,6 @@ namespace DAL.Interfaces
     public interface IResponseRepository : IRepo<Response>
     {
         Task<IEnumerable<Response>> GetAllWithDetailsAsync();
-        Task<IEnumerable<Response>> GetAllByAuthorIdAsync(int authorId);
         Task<Response> GetByIdWithDetailsAsync(int id);
     }
 }

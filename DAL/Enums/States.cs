@@ -6,8 +6,8 @@ namespace DAL.Enums
 {
     public enum States
     {
-        Opened,
-        Hidden,
-        Closed
+        Open,
+        Closed,
+        Hidden
     }
 }

@@ -12,9 +12,7 @@ namespace DAL.Entities
         public int? TopicId { get; set; }
         public int AuthorId { get; set; }
         public DateTime PublicationDate { get; set; }
-
-        [EnumDataType(typeof(States))]
-        public States TopicState { get; set; }
+        public States ResponseState { get; set; }
         public User Author { get; set; }
         public Topic Topic { get; set; }
         public ICollection<Comment> Comments { get; set; }

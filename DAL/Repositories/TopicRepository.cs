@@ -37,18 +37,13 @@ namespace DAL.Repositories
             return await _dbContext.Topics.ToListAsync();
         }
 
-        public async Task<IEnumerable<Topic>> GetAllByAuthorIdAsync(int authorId)
-        {
-            return await _dbContext.Topics
-                .Where(t => t.AuthorId == authorId)
-                .ToListAsync();
-        }
-
         public async Task<IEnumerable<Topic>> GetAllWithDetailsAsync()
         {
             return await _dbContext.Topics
                 .Include(t => t.Author)
                 .Include(t => t.Responses)
+                .Include(t => t.TopicTags)
+                .ThenInclude(tt => tt.Tag)
                 .ToListAsync();
         }
 
@@ -62,6 +57,8 @@ namespace DAL.Repositories
             return await _dbContext.Topics
                 .Include(t => t.Author)
                 .Include(t => t.Responses)
+                .Include(t => t.TopicTags)
+                .ThenInclude(tt => tt.Tag)
                 .FirstAsync(t => t.Id == id);
         }
 

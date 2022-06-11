@@ -8,7 +8,6 @@ namespace DAL.Entities
     {
         Guest,
         AuthorizedUser,
-        Moderator,
-        Admin
+        Moderator
     }
 }

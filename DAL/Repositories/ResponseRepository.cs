@@ -37,13 +37,6 @@ namespace DAL.Repositories
             return await _dbContext.Responses.ToListAsync();
         }
 
-        public async Task<IEnumerable<Response>> GetAllByAuthorIdAsync(int authorId)
-        {
-            return await _dbContext.Responses
-                .Where(r => r.AuthorId == authorId)
-                .ToListAsync();
-        }
-
         public async Task<IEnumerable<Response>> GetAllWithDetailsAsync()
         {
             return await _dbContext.Responses

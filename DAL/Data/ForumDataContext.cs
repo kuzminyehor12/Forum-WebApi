@@ -12,6 +12,8 @@ namespace DAL.Data
         public DbSet<Response> Responses { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<TopicTag> TopicTags { get; set; }
         public ForumDataContext(DbContextOptions<ForumDataContext> options) : base(options)
         {
         }
@@ -29,6 +31,19 @@ namespace DAL.Data
                 .HasMany(t => t.Responses)
                 .WithOne(r => r.Topic)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<TopicTag>()
+                .HasKey(tt => new { tt.TopicId, tt.TagId });
+
+            modelBuilder.Entity<TopicTag>()
+                .HasOne(tt => tt.Topic)
+                .WithMany(t => t.TopicTags)
+                .HasForeignKey(tt => tt.TopicId);
+
+            modelBuilder.Entity<TopicTag>()
+                .HasOne(tt => tt.Tag)
+                .WithMany(tag => tag.TopicTags)
+                .HasForeignKey(tt => tt.TagId);
 
             modelBuilder.Entity<Response>()
                 .HasOne(r => r.Author)

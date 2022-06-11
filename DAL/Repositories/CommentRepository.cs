@@ -37,16 +37,6 @@ namespace DAL.Repositories
             return await _dbContext.Comments.ToListAsync();
         }
 
-        public async Task<IEnumerable<Comment>> GetAllByAuthorIdAsync(int authorId)
-        {
-            return await _dbContext.Comments.Where(c => c.AuthorId == authorId).ToListAsync();
-        }
-
-        public async Task<IEnumerable<Comment>> GetAllByResponseIdAsync(int responseId)
-        {
-            return await _dbContext.Comments.Where(c => c.ResponseId == responseId).ToListAsync();
-        }
-
         public async Task<IEnumerable<Comment>> GetAllWithDetailsAsync()
         {
             return await _dbContext.Comments
@@ -61,7 +51,7 @@ namespace DAL.Repositories
             return await _dbContext.Comments.FindAsync(id);
         }
 
-        public async Task<Comment> GetByIdWithDetails(int id)
+        public async Task<Comment> GetByIdWithDetailsAsync(int id)
         {
             return await _dbContext.Comments
                .Include(c => c.Author)
