@@ -15,7 +15,7 @@ namespace DAL.Data
         private IResponseRepository _responseRepository;
         private ICommentRepository _commentRepository;
         private IUserRepository _userRepository;
-
+        private ITagRepository _tagRepository;
         public UnitOfWork(ForumDataContext context)
         {
             _dbContext = context;
@@ -68,6 +68,19 @@ namespace DAL.Data
                 }
 
                 return _userRepository;
+            }
+        }
+
+        public ITagRepository TagRepository
+        {
+            get
+            {
+                if (_tagRepository is null)
+                {
+                    _tagRepository = new TagRepository(_dbContext);
+                }
+
+                return _tagRepository;
             }
         }
 

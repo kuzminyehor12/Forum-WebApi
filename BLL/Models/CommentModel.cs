@@ -13,5 +13,7 @@ namespace BLL.Models
         public string Text { get; set; }
         public DateTime PublicationDate { get; set; }
         public States CommentState { get; set; }
+        public int Likes { get; set; }
+        public int Complaints { get; set; }
     }
 }

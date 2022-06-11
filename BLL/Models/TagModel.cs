@@ -8,6 +8,6 @@ namespace BLL.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<int> TopicTagIds { get; set; }
+        public ICollection<Tuple<int, int>> TopicTagIds { get; set; }
     }
 }

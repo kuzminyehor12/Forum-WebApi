@@ -39,9 +39,9 @@ namespace DAL.Repositories
         public async Task<IEnumerable<User>> GetAllWithDetailsAsync()
         {
             return await _dbContext.Users
-                .Include(u => u.Topics)
-                .Include(u => u.Responses)
-                .Include(u => u.Comments)
+                .Include(u => u.CreatedTopics)
+                .Include(u => u.CreatedResponses)
+                .Include(u => u.CreatedComments)
                 .ToListAsync();
         }
 
@@ -53,9 +53,9 @@ namespace DAL.Repositories
         public async Task<User> GetByIdWithDetailsAsync(int id)
         {
             return await _dbContext.Users
-               .Include(u => u.Topics)
-               .Include(u => u.Responses)
-               .Include(u => u.Comments)
+               .Include(u => u.CreatedTopics)
+               .Include(u => u.CreatedResponses)
+               .Include(u => u.CreatedComments)
                .FirstAsync(u => u.Id == id);
         }
 

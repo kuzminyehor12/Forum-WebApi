@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ForumDataContext))]
-    [Migration("20220611102526_ManyToManyCreate")]
-    partial class ManyToManyCreate
+    [Migration("20220611162606_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,7 +28,13 @@ namespace DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AuthorId")
+                    b.Property<int?>("AuthorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CommentState")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Complaints")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("PublicationDate")
@@ -40,9 +46,6 @@ namespace DAL.Migrations
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TopicState")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
@@ -52,6 +55,36 @@ namespace DAL.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("DAL.Entities.LikerResponse", b =>
+                {
+                    b.Property<int>("ResponseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ResponseId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("LikerResponses");
+                });
+
+            modelBuilder.Entity("DAL.Entities.LikerTopic", b =>
+                {
+                    b.Property<int>("TopicId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TopicId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("LikerTopics");
+                });
+
             modelBuilder.Entity("DAL.Entities.Response", b =>
                 {
                     b.Property<int>("Id")
@@ -59,19 +92,22 @@ namespace DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AuthorId")
+                    b.Property<int?>("AuthorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Complaints")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("PublicationDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("ResponseState")
+                        .HasColumnType("int");
+
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("TopicId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TopicState")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -95,7 +131,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tag");
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("DAL.Entities.Topic", b =>
@@ -105,7 +141,10 @@ namespace DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AuthorId")
+                    b.Property<int?>("AuthorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Complaints")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -139,7 +178,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("TopicTag");
+                    b.ToTable("TopicTags");
                 });
 
             modelBuilder.Entity("DAL.Entities.User", b =>
@@ -155,13 +194,13 @@ namespace DAL.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Role")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoleId")
                         .HasColumnType("int");
 
                     b.Property<string>("Surname")
@@ -175,10 +214,8 @@ namespace DAL.Migrations
             modelBuilder.Entity("DAL.Entities.Comment", b =>
                 {
                     b.HasOne("DAL.Entities.User", "Author")
-                        .WithMany("Comments")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .WithMany("CreatedComments")
+                        .HasForeignKey("AuthorId");
 
                     b.HasOne("DAL.Entities.Response", "Response")
                         .WithMany("Comments")
@@ -187,27 +224,52 @@ namespace DAL.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("DAL.Entities.LikerResponse", b =>
+                {
+                    b.HasOne("DAL.Entities.Response", "Response")
+                        .WithMany("LikedBy")
+                        .HasForeignKey("ResponseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DAL.Entities.User", "Liker")
+                        .WithMany("LikedResponses")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DAL.Entities.LikerTopic", b =>
+                {
+                    b.HasOne("DAL.Entities.Topic", "Topic")
+                        .WithMany("LikedBy")
+                        .HasForeignKey("TopicId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DAL.Entities.User", "Liker")
+                        .WithMany("LikedTopics")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DAL.Entities.Response", b =>
                 {
                     b.HasOne("DAL.Entities.User", "Author")
-                        .WithMany("Responses")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .WithMany("CreatedResponses")
+                        .HasForeignKey("AuthorId");
 
                     b.HasOne("DAL.Entities.Topic", "Topic")
                         .WithMany("Responses")
-                        .HasForeignKey("TopicId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("TopicId");
                 });
 
             modelBuilder.Entity("DAL.Entities.Topic", b =>
                 {
                     b.HasOne("DAL.Entities.User", "Author")
-                        .WithMany("Topics")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .WithMany("CreatedTopics")
+                        .HasForeignKey("AuthorId");
                 });
 
             modelBuilder.Entity("DAL.Entities.TopicTag", b =>

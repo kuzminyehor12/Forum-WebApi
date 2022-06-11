@@ -12,8 +12,10 @@ namespace BLL.Models
         public string Description { get; set; }
         public DateTime PublicationDate { get; set; }
         public States TopicState { get; set; }
-        public int AuthorId { get; set; }
-        public ICollection<int> TopicTagIds { get; set; }
+        public int? AuthorId { get; set; }
+        public int Likes { get; set; }
+        public int Complaints { get; set; }
+        public ICollection<Tuple<int, int>> TopicTagIds { get; set; }
         public ICollection<int> ResponsesIds { get; set; }
     }
 }

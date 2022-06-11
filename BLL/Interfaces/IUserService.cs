@@ -1,10 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+using BLL.Models;
+using DAL.Entities;
 
 namespace BLL.Interfaces
 {
-    public interface IUserService
+    public interface IUserService : IService<UserModel>
     {
+        Task<IEnumerable<ResponseModel>> GetResponsesByUserIdAsync(int userId);
+        Task<IEnumerable<TopicModel>> GetTopicsByUserIdAsync(int userId);
+        Task<IEnumerable<CommentModel>> GetCommentsByUserIdAsync(int userId);
+        //Task AddTopic(int userId, int topicId);
+        //Task AddResponse(int userId, int topicId, int responseId);
+        //Task AddComment(int userId, int responseId, int commentId);
     }
 }

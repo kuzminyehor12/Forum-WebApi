@@ -9,11 +9,14 @@ namespace DAL.Entities
     {
         public string Name { get; set; }
         public string Surname { get; set; }
+        public string Image { get; set; }
         public DateTime BirthDate { get; set; }
         public string Email { get; set; }
         public Roles Role { get; set; }
-        public ICollection<Topic> Topics { get; set; }
-        public ICollection<Response> Responses { get; set; }
-        public ICollection<Comment> Comments { get; set; }
+        public ICollection<LikerTopic> LikedTopics { get; set; }
+        public ICollection<LikerResponse> LikedResponses { get; set; }
+        public ICollection<Topic> CreatedTopics { get; set; }
+        public ICollection<Response> CreatedResponses { get; set; }
+        public ICollection<Comment> CreatedComments { get; set; }
     }
 }
