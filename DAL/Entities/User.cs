@@ -7,12 +7,12 @@ namespace DAL.Entities
 {
     public class User : BaseEntity
     {
-        public string Name { get; set; }
-        public string Surname { get; set; }
+        public string Nickname { get; set; }
         public string Image { get; set; }
         public DateTime BirthDate { get; set; }
-        public string Email { get; set; }
         public Roles Role { get; set; }
+        public int UserCredentialsId { get; set; }
+        public UserCredentials UserCredentials { get; set; }
         public ICollection<LikerTopic> LikedTopics { get; set; }
         public ICollection<LikerResponse> LikedResponses { get; set; }
         public ICollection<Topic> CreatedTopics { get; set; }

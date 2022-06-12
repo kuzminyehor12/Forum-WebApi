@@ -18,27 +18,27 @@ namespace DAL.Repositories
         }
         public async Task AddAsync(User entity)
         {
-            await _dbContext.Users.AddAsync(entity);
+            await _dbContext.RegisteredUsers.AddAsync(entity);
         }
 
         public void Delete(User entity)
         {
-            _dbContext.Users.Remove(entity);
+            _dbContext.RegisteredUsers.Remove(entity);
         }
 
         public async Task DeleteByIdAsync(int id)
         {
-            await Task.Run(() => _dbContext.Users.Remove(_dbContext.Users.Find(id)));
+            await Task.Run(() => _dbContext.RegisteredUsers.Remove(_dbContext.RegisteredUsers.Find(id)));
         }
 
         public async Task<IEnumerable<User>> GetAllAsync()
         {
-            return await _dbContext.Users.ToListAsync();
+            return await _dbContext.RegisteredUsers.ToListAsync();
         }
 
         public async Task<IEnumerable<User>> GetAllWithDetailsAsync()
         {
-            return await _dbContext.Users
+            return await _dbContext.RegisteredUsers
                 .Include(u => u.CreatedTopics)
                 .Include(u => u.CreatedResponses)
                 .Include(u => u.CreatedComments)
@@ -51,12 +51,12 @@ namespace DAL.Repositories
 
         public async Task<User> GetByIdAsync(int id)
         {
-            return await _dbContext.Users.FindAsync(id);
+            return await _dbContext.RegisteredUsers.FindAsync(id);
         }
 
         public async Task<User> GetByIdWithDetailsAsync(int id)
         {
-            return await _dbContext.Users
+            return await _dbContext.RegisteredUsers
                .Include(u => u.CreatedTopics)
                .Include(u => u.CreatedResponses)
                .Include(u => u.CreatedComments)
@@ -69,7 +69,7 @@ namespace DAL.Repositories
 
         public void Update(User entity)
         {
-            User findingUser = _dbContext.Users.Find(entity);
+            User findingUser = _dbContext.RegisteredUsers.Find(entity);
 
             if (findingUser != null)
             {

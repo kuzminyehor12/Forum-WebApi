@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Text;
 using DAL.Entities;
 using DAL.Extensions;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Data
 {
-    public class ForumDataContext : DbContext
+    public class ForumDataContext : IdentityDbContext<UserCredentials>
     {
         public DbSet<Topic> Topics { get; set; }
         public DbSet<Response> Responses { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<User> RegisteredUsers { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<TopicTag> TopicTags { get; set; }
         public DbSet<LikerResponse> LikerResponses { get; set; }
@@ -25,6 +26,11 @@ namespace DAL.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.UserCredentials);
+
             modelBuilder.Entity<Topic>()
                 .HasOne(t => t.Author)
                 .WithMany(u => u.CreatedTopics);
