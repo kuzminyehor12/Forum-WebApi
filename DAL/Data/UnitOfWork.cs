@@ -16,6 +16,10 @@ namespace DAL.Data
         private ICommentRepository _commentRepository;
         private IUserRepository _userRepository;
         private ITagRepository _tagRepository;
+        private ITopicTagRepository _topicTagRepository;
+        private ILikerResponseRepository _likerResponseRepository;
+        private ILikerTopicRepository _likerTopicRepository;
+
         public UnitOfWork(ForumDataContext context)
         {
             _dbContext = context;
@@ -81,6 +85,45 @@ namespace DAL.Data
                 }
 
                 return _tagRepository;
+            }
+        }
+
+        public ITopicTagRepository TopicTagRepository
+        {
+            get
+            {
+                if(_topicTagRepository is null)
+                {
+                    _topicTagRepository = new TopicTagRepository(_dbContext);
+                }
+
+                return _topicTagRepository;
+            }
+        }
+
+        public ILikerResponseRepository LikerResponseRepository
+        {
+            get
+            {
+                if(_likerResponseRepository is null)
+                {
+                    _likerResponseRepository = new LikerResponseRepository(_dbContext);
+                }
+
+                return _likerResponseRepository;
+            }
+        }
+
+        public ILikerTopicRepository LikerTopicRepository
+        {
+            get
+            {
+                if (_likerTopicRepository is null)
+                {
+                    _likerTopicRepository = new LikerTopicRepository(_dbContext);
+                }
+
+                return _likerTopicRepository;
             }
         }
 

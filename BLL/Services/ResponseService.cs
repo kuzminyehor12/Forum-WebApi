@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using BLL.Interfaces;
 using BLL.Models;
+using BLL.Validation;
+using DAL.Entities;
 using DAL.Interfaces;
 using FluentValidation;
 
@@ -21,44 +24,69 @@ namespace BLL.Services
             _mapper = mapper;
             _validator = validator;
         }
-        public Task AddAsync(ResponseModel model)
+        public async Task AddAsync(ResponseModel model)
         {
-            throw new NotImplementedException();
+            if (_validator.Validate(model).Errors.Count != 0)
+            {
+                throw new ForumException("The response has incorrect data!");
+            }
+
+            var response = _mapper.Map<Response>(model);
+
+            await _uow.ResponseRepository.AddAsync(response);
+            await _uow.SaveAsync();
         }
 
-        public Task CompainAboutTopic(int responseId)
+        public async Task ComplainAboutResponse(int responseId)
         {
-            throw new NotImplementedException();
+            var response = await _uow.ResponseRepository.GetByIdWithDetailsAsync(responseId);
+            response.Complaints++;
+
+            _uow.ResponseRepository.Update(response);
+            await _uow.SaveAsync();
         }
 
-        public Task DeleteAsync(int modelId)
+        public async Task DeleteAsync(int modelId)
         {
-            throw new NotImplementedException();
+            await _uow.ResponseRepository.DeleteByIdAsync(modelId);
+            await _uow.SaveAsync();
         }
 
-        public Task<IEnumerable<ResponseModel>> GetAllAsync()
+        public async Task<IEnumerable<ResponseModel>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var responses = await _uow.ResponseRepository.GetAllWithDetailsAsync();
+            return _mapper.Map<IEnumerable<ResponseModel>>(responses);
         }
 
-        public Task<ResponseModel> GetByIdAsync(int id)
+        public async Task<ResponseModel> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var response = await _uow.ResponseRepository.GetByIdWithDetailsAsync(id);
+            return _mapper.Map<ResponseModel>(response);
         }
 
-        public Task LikeResponse(int responseId)
+        public async Task<IEnumerable<ResponseModel>> SortByLikes()
         {
-            throw new NotImplementedException();
+            var responses = await _uow.ResponseRepository.GetAllWithDetailsAsync();
+            return _mapper.Map<IEnumerable<ResponseModel>>(responses.OrderBy(r => r.LikedBy.Count));
         }
 
-        public Task<IEnumerable<ResponseModel>> SortByPublicationDate()
+        public async Task<IEnumerable<ResponseModel>> SortByPublicationDate()
         {
-            throw new NotImplementedException();
+            var responses = await _uow.ResponseRepository.GetAllWithDetailsAsync();
+            return _mapper.Map<IEnumerable<ResponseModel>>(responses.OrderBy(r => r.PublicationDate));
         }
 
-        public Task UpdateAsync(ResponseModel model)
+        public async Task UpdateAsync(ResponseModel model)
         {
-            throw new NotImplementedException();
+            if (_validator.Validate(model).Errors.Count != 0)
+            {
+                throw new ForumException("The response has incorrect data!");
+            }
+
+            var response = _mapper.Map<Response>(model);
+
+            _uow.ResponseRepository.Update(response);
+            await _uow.SaveAsync();
         }
     }
 }

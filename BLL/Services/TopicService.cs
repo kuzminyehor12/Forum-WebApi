@@ -37,7 +37,15 @@ namespace BLL.Services
             await _uow.SaveAsync();
         }
 
-        public async Task CompainAboutTopicAsync(int topicId)
+        public async Task AddTag(TopicTagModel model)
+        {
+            var topicTag = _mapper.Map<TopicTag>(model);
+
+            await _uow.TopicTagRepository.AddAsync(topicTag);
+            await _uow.SaveAsync();
+        }
+
+        public async Task ComplainAboutTopicAsync(int topicId)
         {
             var topic = await _uow.TopicRepository.GetByIdWithDetailsAsync(topicId);
             topic.Complaints++;
@@ -86,30 +94,19 @@ namespace BLL.Services
             return _mapper.Map<TopicModel>(topic);
         }
 
-        public Task LikeTopicAsync(int topicId)
+        public async Task RemoveTag(TopicTagModel model)
         {
-            throw new NotImplementedException();
+            var topicTag = _mapper.Map<TopicTag>(model);
+
+            await Task.Run(() => _uow.TopicTagRepository.Delete(topicTag));
+            await _uow.SaveAsync();
         }
 
-        public Task<IEnumerable<TopicModel>> SortByLikes()
+        public async Task<IEnumerable<TopicModel>> SortByLikes()
         {
-            throw new NotImplementedException();
+            var topics = await _uow.TopicRepository.GetAllWithDetailsAsync();
+            return _mapper.Map<IEnumerable<TopicModel>>(topics.OrderBy(t => t.LikedBy.Count));
         }
-
-        //public async Task LikeTopicAsync(int topicId)
-        //{
-        //    var topic = await _uow.TopicRepository.GetByIdWithDetailsAsync(topicId);
-        //    topic.Likes++;
-
-        //    _uow.TopicRepository.Update(topic);
-        //    await _uow.SaveAsync();
-        //}
-
-        //public async Task<IEnumerable<TopicModel>> SortByLikes()
-        //{
-        //    var topics = await _uow.TopicRepository.GetAllWithDetailsAsync();
-        //    return _mapper.Map<IEnumerable<TopicModel>>(topics.OrderBy(t => t.PublicationDate));
-        //}
 
         public async Task<IEnumerable<TopicModel>> SortByPublicationDate()
         {

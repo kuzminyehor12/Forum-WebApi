@@ -73,6 +73,34 @@ namespace BLL.Services
             return _mapper.Map<IEnumerable<TopicModel>>(users.Select(u => u.CreatedTopics));
         }
 
+        public async Task LikeResponseAsync(LikerResponseModel model)
+        {
+            var likerResponse = _mapper.Map<LikerResponse>(model);
+            await _uow.LikerResponseRepository.AddAsync(likerResponse);
+            await _uow.SaveAsync();
+        }
+
+        public async Task LikeTopicAsync(LikerTopicModel model)
+        {
+            var likerTopic = _mapper.Map<LikerTopic>(model);
+            await _uow.LikerTopicRepository.AddAsync(likerTopic);
+            await _uow.SaveAsync();
+        }
+
+        public async Task RemoveLikeResponseAsync(LikerResponseModel model)
+        {
+            var likerResponse = _mapper.Map<LikerResponse>(model);
+            await Task.Run(() => _uow.LikerResponseRepository.Delete(likerResponse));
+            await _uow.SaveAsync();
+        }
+
+        public async Task RemoveLikeTopicAsync(LikerTopicModel model)
+        {
+            var likerTopic = _mapper.Map<LikerTopic>(model);
+            await Task.Run(() => _uow.LikerTopicRepository.Delete(likerTopic));
+            await _uow.SaveAsync();
+        }
+
         public async Task UpdateAsync(UserModel model)
         {
             if (_validator.Validate(model).Errors.Count != 0)

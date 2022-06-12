@@ -43,6 +43,8 @@ namespace DAL.Repositories
                 .Include(r => r.Author)
                 .Include(r => r.Topic)
                 .Include(r => r.Comments)
+                .Include(r => r.LikedBy)
+                .ThenInclude(lr => lr.Liker)
                 .ToListAsync();
         }
 
@@ -57,6 +59,8 @@ namespace DAL.Repositories
                 .Include(r => r.Author)
                 .Include(r => r.Topic)
                 .Include(r => r.Comments)
+                .Include(r => r.LikedBy)
+                .ThenInclude(lr => lr.Liker)
                 .FirstAsync(r => r.Id == id);
         }
 

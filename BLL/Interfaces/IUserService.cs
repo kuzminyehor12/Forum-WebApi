@@ -12,6 +12,10 @@ namespace BLL.Interfaces
         Task<IEnumerable<ResponseModel>> GetResponsesByUserIdAsync(int userId);
         Task<IEnumerable<TopicModel>> GetTopicsByUserIdAsync(int userId);
         Task<IEnumerable<CommentModel>> GetCommentsByUserIdAsync(int userId);
+        Task LikeTopicAsync(LikerTopicModel model);
+        Task LikeResponseAsync(LikerResponseModel model);
+        Task RemoveLikeTopicAsync(LikerTopicModel model);
+        Task RemoveLikeResponseAsync(LikerResponseModel model);
         //Task AddTopic(int userId, int topicId);
         //Task AddResponse(int userId, int topicId, int responseId);
         //Task AddComment(int userId, int responseId, int commentId);

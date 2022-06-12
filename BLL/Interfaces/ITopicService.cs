@@ -11,7 +11,8 @@ namespace BLL.Interfaces
         Task<IEnumerable<TopicModel>> GetByFilterAsync(FilterModel filter);
         Task<IEnumerable<TopicModel>> SortByPublicationDate();
         Task<IEnumerable<TopicModel>> SortByLikes();
-        Task LikeTopicAsync(int topicId);
-        Task CompainAboutTopicAsync(int topicId);
+        Task ComplainAboutTopicAsync(int topicId);
+        Task AddTag(TopicTagModel model);
+        Task RemoveTag(TopicTagModel model);
     }
 }

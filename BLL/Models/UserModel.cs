@@ -14,8 +14,10 @@ namespace BLL.Models
         public DateTime BirthDate { get; set; }
         public string Email { get; set; }
         public Roles Role { get; set; }
-        public ICollection<int> TopicIds { get; set; }
-        public ICollection<int> ResponseIds { get; set; }
-        public ICollection<int> CommentIds { get; set; }
+        public ICollection<int> CreatedTopicIds { get; set; }
+        public ICollection<int> CreatedResponseIds { get; set; }
+        public ICollection<Tuple<int, int>> LikedTopicIds { get; set; }
+        public ICollection<Tuple<int, int>> LikedResponseIds { get; set; }
+        public ICollection<int> CreatedCommentIds { get; set; }
     }
 }

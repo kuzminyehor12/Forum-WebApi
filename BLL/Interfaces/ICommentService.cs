@@ -8,7 +8,6 @@ namespace BLL.Interfaces
 {
     public interface ICommentService : IService<CommentModel>
     {
-        Task LikeComment(int commentId);
-        Task CompainAboutComment(int commentId);
+        Task ComplainAboutComment(int commentId);
     }
 }

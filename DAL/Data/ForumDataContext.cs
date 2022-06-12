@@ -33,48 +33,9 @@ namespace DAL.Data
                 .HasMany(t => t.Responses)
                 .WithOne(r => r.Topic);
 
-            //modelBuilder.Entity<TopicTag>()
-            //    .HasKey(tt => new { tt.TopicId, tt.TagId });
-
-            //modelBuilder.Entity<TopicTag>()
-            //    .HasOne(tt => tt.Topic)
-            //    .WithMany(t => t.TopicTags)
-            //    .HasForeignKey(tt => tt.TopicId);
-
-            //modelBuilder.Entity<TopicTag>()
-            //    .HasOne(tt => tt.Tag)
-            //    .WithMany(tag => tag.TopicTags)
-            //    .HasForeignKey(tt => tt.TagId);
-
             modelBuilder.Entity<TopicTag>().Many2Many();
             modelBuilder.Entity<LikerTopic>().Many2Many();
             modelBuilder.Entity<LikerResponse>().Many2Many();
-            
-            //modelBuilder.Entity<LikerTopic>()
-            //    .HasKey(lt => new { lt.TopicId, lt.UserId });
-
-            //modelBuilder.Entity<LikerTopic>()
-            //    .HasOne(lt => lt.Topic)
-            //    .WithMany(t => t.LikedBy)
-            //    .HasForeignKey(lt => lt.TopicId);
-
-            //modelBuilder.Entity<LikerTopic>()
-            //    .HasOne(lt => lt.Liker)
-            //    .WithMany(u => u.LikedTopics)
-            //    .HasForeignKey(lt => lt.UserId);
-
-            //modelBuilder.Entity<LikerResponse>()
-            //     .HasKey(lr => new { lr.ResponseId, lr.UserId });
-
-            //modelBuilder.Entity<LikerResponse>()
-            //    .HasOne(lt => lt.Response)
-            //    .WithMany(t => t.LikedBy)
-            //    .HasForeignKey(lt => lt.ResponseId);
-
-            //modelBuilder.Entity<LikerResponse>()
-            //    .HasOne(lt => lt.Liker)
-            //    .WithMany(u => u.LikedResponses)
-            //    .HasForeignKey(lt => lt.UserId);
 
             modelBuilder.Entity<Response>()
                 .HasOne(r => r.Author)
