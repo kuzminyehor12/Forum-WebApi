@@ -8,7 +8,7 @@ namespace BLL.Interfaces
 {
     public interface IResponseService : IService<ResponseModel>
     {
-        Task ComplainAboutResponse(int responseId);
+        Task ComplainAboutResponseAsync(int responseId);
         Task<IEnumerable<ResponseModel>> SortByPublicationDate();
         Task<IEnumerable<ResponseModel>> SortByLikes();
     }

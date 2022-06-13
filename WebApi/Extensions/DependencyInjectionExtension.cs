@@ -4,8 +4,11 @@ using BLL.Models;
 using BLL.Services;
 using BLL.Validation;
 using DAL.Data;
+using DAL.Entities;
 using DAL.Interfaces;
 using FluentValidation;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace WebApi.Extensions
@@ -19,6 +22,9 @@ namespace WebApi.Extensions
             services.AddScoped<IResponseService, ResponseService>();
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IUserService, UserService>();
+
+            services.AddScoped<UserManager<UserCredentials>>();
+            services.AddScoped<SignInManager<UserCredentials>>();
         }
 
         public static void AddValidators(this IServiceCollection services)

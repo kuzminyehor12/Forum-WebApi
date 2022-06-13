@@ -22,7 +22,7 @@ namespace DAL.Data
         {
         }
 
-        public ForumDataContext() { }
+        //public ForumDataContext() { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -55,9 +55,9 @@ namespace DAL.Data
                 .HasOne(c => c.Author)
                 .WithMany(u => u.CreatedComments);
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ForumDb;Trusted_Connection=True;");
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ForumDb;Trusted_Connection=True;");
+        //}
     }
 }

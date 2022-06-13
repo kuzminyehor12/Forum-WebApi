@@ -37,7 +37,7 @@ namespace BLL.Services
             await _uow.SaveAsync();
         }
 
-        public async Task ComplainAboutResponse(int responseId)
+        public async Task ComplainAboutResponseAsync(int responseId)
         {
             var response = await _uow.ResponseRepository.GetByIdWithDetailsAsync(responseId);
             response.Complaints++;

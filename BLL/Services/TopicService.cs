@@ -94,6 +94,12 @@ namespace BLL.Services
             return _mapper.Map<TopicModel>(topic);
         }
 
+        public async Task<IEnumerable<TagModel>> GetTags()
+        {
+            var tags = await _uow.TagRepository.GetAllWithDetailsAsync();
+            return _mapper.Map<IEnumerable<TagModel>>(tags);
+        }
+
         public async Task RemoveTag(TopicTagModel model)
         {
             var topicTag = _mapper.Map<TopicTag>(model);

@@ -10,12 +10,14 @@ using BLL.Models;
 using BLL.Services;
 using BLL.Validation;
 using DAL.Data;
+using DAL.Entities;
 using DAL.Interfaces;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -53,17 +55,53 @@ namespace WebApi
             services.AddValidators();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = Configuration["Jwt:Issuer"],
-                    ValidAudience = Configuration["Jwt:Audience"],
-                    IssuerSigningKey =
-                        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
-                });
+                .AddJwtBearer(options => {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidAudience = Configuration["Jwt:Audience"],
+                        IssuerSigningKey =
+                           new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                    };
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnTokenValidated = context =>
+                        {
+                            var userEngine = context.HttpContext.RequestServices.GetRequiredService<UserManager<UserCredentials>>();
+                            var user = userEngine.GetUserAsync(context.HttpContext.User);
+
+                            if(user is null)
+                            {
+                                context.Fail("Unauthorized");
+                            }
+
+                            return Task.CompletedTask;
+                        }
+                    };
+            });
+
+            /*services.AddIdentity<UserCredentials, IdentityRole>(
+                options =>
+                    options.Password = new PasswordOptions
+                    {
+                        RequireDigit = true,
+                        RequiredLength = 8,
+                        RequireLowercase = false,
+                        RequireUppercase = true,
+                        RequiredUniqueChars = 1,
+                    }
+            );*/
+
+            services.AddDefaultIdentity<UserCredentials>(options =>
+                options.SignIn.RequireConfirmedAccount = false)
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ForumDataContext>();
+
+            services.AddSingleton(Configuration);
 
             services.AddControllers();
             services.AddSwaggerGen();

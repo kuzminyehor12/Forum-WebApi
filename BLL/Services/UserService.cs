@@ -61,6 +61,14 @@ namespace BLL.Services
             return _mapper.Map<IEnumerable<CommentModel>>(users.Select(u => u.CreatedComments));
         }
 
+        public async Task<IEnumerable<UserCredentials>> GetCredentials()
+        {
+            var users = await _uow.UserRepository.GetAllWithDetailsAsync();
+            var credentials = users.Select(u => u.UserCredentials);
+
+            return credentials;
+        }
+
         public async Task<IEnumerable<ResponseModel>> GetResponsesByUserIdAsync(int userId)
         {
             var users = await _uow.UserRepository.GetAllWithDetailsAsync();

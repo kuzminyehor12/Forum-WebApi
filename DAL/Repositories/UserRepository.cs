@@ -46,6 +46,7 @@ namespace DAL.Repositories
                 .ThenInclude(lt => lt.Topic)
                 .Include(u => u.LikedResponses)
                 .ThenInclude(lr => lr.Response)
+                .Include(u => u.UserCredentials)
                 .ToListAsync();
         }
 
@@ -64,6 +65,7 @@ namespace DAL.Repositories
                .ThenInclude(lt => lt.Topic)
                .Include(u => u.LikedResponses)
                .ThenInclude(lr => lr.Response)
+               .Include(u => u.UserCredentials)
                .FirstAsync(u => u.Id == id);
         }
 
