@@ -24,10 +24,5 @@ namespace DAL.Repositories
         {
             _dbContext.LikerTopics.Remove(entity);
         }
-
-        public async Task DeleteByCompositeKey(Tuple<int, int> compositeKey)
-        {
-            await Task.Run(() => _dbContext.LikerTopics.Remove(_dbContext.LikerTopics.Find(compositeKey.Item1, compositeKey.Item2)));
-        }
     }
 }

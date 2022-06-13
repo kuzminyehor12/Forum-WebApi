@@ -55,6 +55,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [AuthorizeWithRole(Roles.Moderator)]
         public async Task<ActionResult<UserModel>> GetById(int id)
         {
             try
@@ -69,6 +70,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("{id}/topics")]
+        [AuthorizeWithRole(Roles.Moderator)]
         public async Task<ActionResult<IEnumerable<TopicModel>>> GetTopicsByUserId(int id)
         {
             try
@@ -83,6 +85,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("{id}/responses")]
+        [AuthorizeWithRole(Roles.Moderator)]
         public async Task<ActionResult<IEnumerable<ResponseModel>>> GetResponsesByUserId(int id)
         {
             try
@@ -97,6 +100,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("{id}/comments")]
+        [AuthorizeWithRole(Roles.Moderator)]
         public async Task<ActionResult<IEnumerable<CommentModel>>> GetCommentsByUserId(int id)
         {
             try
@@ -111,6 +115,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("/response/like/add")]
+        [AuthorizeWithRole(Roles.AuthorizedUser, Roles.Moderator)]
         public async Task<ActionResult> LikeResponse([FromBody] LikerResponseModel model)
         {
             try
@@ -125,6 +130,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("/topic/like/add")]
+        [AuthorizeWithRole(Roles.AuthorizedUser, Roles.Moderator)]
         public async Task<ActionResult> LikeTopic([FromBody] LikerTopicModel model)
         {
             try
@@ -139,6 +145,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("/response/like/remove")]
+        [AuthorizeWithRole(Roles.AuthorizedUser, Roles.Moderator)]
         public async Task<ActionResult> RemoveLikeResponse([FromBody] LikerResponseModel model)
         {
             try
@@ -153,6 +160,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("/topic/like/remove")]
+        [AuthorizeWithRole(Roles.AuthorizedUser, Roles.Moderator)]
         public async Task<ActionResult> RemoveLikeTopic([FromBody] LikerTopicModel model)
         {
             try
@@ -167,6 +175,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("/token")]
+        [AllowAnonymous]
         public async Task<ActionResult> GetToken([FromBody] AuthenticationModel model)
         {
             var credentials = await _service.GetCredentials();
@@ -207,6 +216,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("/register")]
+        [AllowAnonymous]
         public async Task<ActionResult> Register([FromBody] UserModel model)
         {
             UserCredentials credentials = new UserCredentials
@@ -241,6 +251,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [AuthorizeWithRole(Roles.Moderator)]
         public async Task<ActionResult> Update(int Id, [FromBody] UserModel value)
         {
             try
@@ -260,6 +271,7 @@ namespace WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [AuthorizeWithRole(Roles.Moderator)]
         public async Task<ActionResult> Delete(int id)
         {
             try

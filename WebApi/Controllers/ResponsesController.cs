@@ -52,7 +52,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpGet("/sort/likes")]
+        [HttpGet("/sort/activity")]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<ResponseModel>>> GetSortedByLikes()
         {
@@ -67,7 +67,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpGet("/sort/date")]
+        [HttpGet("/sort/publicationDate")]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<ResponseModel>>> GetSortedByDate()
         {

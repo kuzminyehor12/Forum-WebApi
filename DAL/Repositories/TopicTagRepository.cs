@@ -24,10 +24,5 @@ namespace DAL.Repositories
         {
             _dbContext.TopicTags.Remove(entity);
         }
-
-        public async Task DeleteByCompositeKey(Tuple<int, int> compositeKey)
-        {
-            await Task.Run(() => _dbContext.TopicTags.Remove(_dbContext.TopicTags.Find(compositeKey.Item1, compositeKey.Item2)));
-        }
     }
 }

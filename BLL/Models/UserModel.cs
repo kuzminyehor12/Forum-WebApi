@@ -17,8 +17,8 @@ namespace BLL.Models
         public Roles Role { get; set; }
         public ICollection<int> CreatedTopicIds { get; set; }
         public ICollection<int> CreatedResponseIds { get; set; }
-        public ICollection<Tuple<int, int>> LikedTopicIds { get; set; }
-        public ICollection<Tuple<int, int>> LikedResponseIds { get; set; }
+        public ICollection<LikerResponseModel> LikedTopicIds { get; set; }
+        public ICollection<LikerTopicModel> LikedResponseIds { get; set; }
         public ICollection<int> CreatedCommentIds { get; set; }
     }
 }

@@ -6,7 +6,6 @@ namespace DAL.Entities
 {
     public enum Roles 
     {
-        Guest,
         AuthorizedUser,
         Moderator
     }

@@ -84,7 +84,7 @@ namespace WebApi
                     };
             });
 
-            /*services.AddIdentity<UserCredentials, IdentityRole>(
+            services.AddIdentity<UserCredentials, IdentityRole>(
                 options =>
                     options.Password = new PasswordOptions
                     {
@@ -94,12 +94,14 @@ namespace WebApi
                         RequireUppercase = true,
                         RequiredUniqueChars = 1,
                     }
-            );*/
+            )
+              .AddRoles<IdentityRole>()
+              .AddEntityFrameworkStores<ForumDataContext>(); 
 
-            services.AddDefaultIdentity<UserCredentials>(options =>
-                options.SignIn.RequireConfirmedAccount = false)
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ForumDataContext>();
+            //services.AddDefaultIdentity<UserCredentials>(options =>
+            //    options.SignIn.RequireConfirmedAccount = false)
+            //    .AddRoles<IdentityRole>()
+            //    .AddEntityFrameworkStores<ForumDataContext>();
 
             services.AddSingleton(Configuration);
 
@@ -113,7 +115,13 @@ namespace WebApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseSwagger();
 

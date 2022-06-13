@@ -27,8 +27,10 @@ namespace BLL.Mapper
                .ForMember(um => um.CreatedTopicIds, u => u.MapFrom(x => x.CreatedTopics.Select(c => c.Id)))
                .ForMember(um => um.CreatedResponseIds, u => u.MapFrom(x => x.CreatedResponses.Select(c => c.Id)))
                .ForMember(um => um.CreatedCommentIds, u => u.MapFrom(x => x.CreatedComments.Select(c => c.Id)))
-               .ForMember(um => um.LikedResponseIds, u => u.MapFrom(x => x.LikedResponses.Select(lr => new Tuple<int, int>(lr.UserId, lr.ResponseId))))
-               .ForMember(um => um.LikedTopicIds, u => u.MapFrom(x => x.LikedTopics.Select(lt => new Tuple<int, int>(lt.UserId, lt.TopicId))))
+               .ForMember(um => um.LikedResponseIds, u => u.MapFrom(x => x.LikedResponses.Select(lr =>
+                    new LikerResponseModel { UserId = lr.UserId, ResponseId = lr.ResponseId })))
+               .ForMember(um => um.LikedTopicIds, u => u.MapFrom(x => x.LikedTopics.Select(lt => 
+                    new LikerTopicModel { UserId = lt.UserId, TopicId = lt.TopicId })))
                .ForMember(um => um.Email, u => u.MapFrom(x => x.UserCredentials.Email))
                .ReverseMap();
 

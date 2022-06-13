@@ -10,6 +10,5 @@ namespace DAL.Interfaces
     {
         Task AddAsync(TopicTag entity);
         void Delete(TopicTag entity);
-        Task DeleteByCompositeKey(Tuple<int, int> compositeKey);
     }
 }

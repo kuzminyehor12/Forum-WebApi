@@ -10,19 +10,19 @@ namespace DAL.Data
 {
     public class ForumDataContext : IdentityDbContext<UserCredentials>
     {
-        public DbSet<Topic> Topics { get; set; }
-        public DbSet<Response> Responses { get; set; }
-        public DbSet<Comment> Comments { get; set; }
-        public DbSet<User> RegisteredUsers { get; set; }
-        public DbSet<Tag> Tags { get; set; }
-        public DbSet<TopicTag> TopicTags { get; set; }
-        public DbSet<LikerResponse> LikerResponses { get; set; }
-        public DbSet<LikerTopic> LikerTopics { get; set; }
+        public virtual DbSet<Topic> Topics { get; set; }
+        public virtual DbSet<Response> Responses { get; set; }
+        public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<User> RegisteredUsers { get; set; }
+        public virtual DbSet<Tag> Tags { get; set; }
+        public virtual DbSet<TopicTag> TopicTags { get; set; }
+        public virtual DbSet<LikerResponse> LikerResponses { get; set; }
+        public virtual DbSet<LikerTopic> LikerTopics { get; set; }
         public ForumDataContext(DbContextOptions<ForumDataContext> options) : base(options)
         {
         }
 
-        //public ForumDataContext() { }
+        public ForumDataContext() { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -55,9 +55,10 @@ namespace DAL.Data
                 .HasOne(c => c.Author)
                 .WithMany(u => u.CreatedComments);
         }
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ForumDb;Trusted_Connection=True;");
-        //}
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ForumDb;Trusted_Connection=True;");
+        }
     }
 }
