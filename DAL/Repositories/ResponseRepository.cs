@@ -66,12 +66,7 @@ namespace DAL.Repositories
 
         public void Update(Response entity)
         {
-            Response findingResponse = _dbContext.Responses.Find(entity);
-
-            if (findingResponse != null)
-            {
-                _dbContext.Entry(findingResponse).CurrentValues.SetValues(entity);
-            }
+            _dbContext.Responses.Update(entity);
         }
     }
 }

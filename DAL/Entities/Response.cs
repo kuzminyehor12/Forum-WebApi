@@ -16,7 +16,7 @@ namespace DAL.Entities
         public int Complaints { get; set; }
         public User Author { get; set; }
         public Topic Topic { get; set; }
-        public ICollection<Comment> Comments { get; set; }
-        public ICollection<LikerResponse> LikedBy { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<LikerResponse> LikedBy { get; set; }
     }
 }

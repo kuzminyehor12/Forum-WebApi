@@ -57,63 +57,6 @@ namespace Forum.Tests.DAL.Tests
         }
 
         [TestMethod]
-        public async Task GetAll_WithMock_ShouldGetTags()
-        {
-            _mockContext.Setup(t => t.Tags).Returns(_mockDbSet.Object);
-            _mockDbSet.Setup(s => s.ToListAsync(It.IsAny<CancellationToken>())).Returns(It.IsAny<Task<List<Tag>>>());
-            ITagRepository repo = new TagRepository(_mockContext.Object);
-
-            var entities = await repo.GetAllAsync();
-
-            Assert.AreEqual(entities, typeof(IEnumerable<Tag>));
-            _mockContext.Verify(x => x.Tags.ToListAsync(It.IsAny<CancellationToken>()));
-        }
-
-        [TestMethod]
-        public async Task GetAllWithDetails_WithMock_ShouldGetTagsWithDetails()
-        {
-            _mockContext.Setup(t => t.Tags).Returns(_mockDbSet.Object);
-            ITagRepository repo = new TagRepository(_mockContext.Object);
-
-            var entities = await repo.GetAllAsync();
-
-            Assert.AreEqual(entities, typeof(IEnumerable<Tag>));
-            _mockContext.Verify(x => x.Tags
-                .Include(t => t.TopicTags)
-                .ThenInclude(tt => tt.Topic)
-                .ToListAsync(It.IsAny<CancellationToken>()));
-        }
-
-        [TestMethod]
-        public async Task GetById_WithMock_ShouldGetTag()
-        {
-            _mockContext.Setup(t => t.Tags).Returns(_mockDbSet.Object);
-            ITagRepository repo = new TagRepository(_mockContext.Object);
-            int id = 1;
-
-            var entity = await repo.GetByIdAsync(id);
-
-            Assert.AreEqual(entity, typeof(Tag));
-            _mockContext.Verify(x => x.Tags.FindAsync(id));
-        }
-
-        [TestMethod]
-        public async Task GetByIdWithDetails_WithMock_ShouldGetTagWithDetails()
-        {
-            _mockContext.Setup(t => t.Tags).Returns(_mockDbSet.Object);
-            ITagRepository repo = new TagRepository(_mockContext.Object);
-            int id = 1;
-
-            var entity = await repo.GetByIdAsync(id);
-
-            Assert.AreEqual(entity, typeof(Tag));
-            _mockContext.Verify(x => x.Tags
-                .Include(t => t.TopicTags)
-                .ThenInclude(tt => tt.Topic)
-                .FirstAsync(c => c.Id == id, It.IsAny<CancellationToken>()));
-        }
-
-        [TestMethod]
         public void Update_WithMock_ShouldUpdateTag()
         {
             _mockContext.Setup(t => t.Tags).Returns(_mockDbSet.Object);

@@ -13,10 +13,10 @@ namespace DAL.Entities
         public Roles Role { get; set; }
         public string UserCredentialsId { get; set; }
         public UserCredentials UserCredentials { get; set; }
-        public ICollection<LikerTopic> LikedTopics { get; set; }
-        public ICollection<LikerResponse> LikedResponses { get; set; }
-        public ICollection<Topic> CreatedTopics { get; set; }
-        public ICollection<Response> CreatedResponses { get; set; }
-        public ICollection<Comment> CreatedComments { get; set; }
+        public virtual ICollection<LikerTopic> LikedTopics { get; set; }
+        public virtual ICollection<LikerResponse> LikedResponses { get; set; }
+        public virtual ICollection<Topic> CreatedTopics { get; set; }
+        public virtual ICollection<Response> CreatedResponses { get; set; }
+        public virtual ICollection<Comment> CreatedComments { get; set; }
     }
 }

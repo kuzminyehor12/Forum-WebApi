@@ -71,12 +71,7 @@ namespace DAL.Repositories
 
         public void Update(User entity)
         {
-            User findingUser = _dbContext.RegisteredUsers.Find(entity);
-
-            if (findingUser != null)
-            {
-                _dbContext.Entry(findingUser).CurrentValues.SetValues(entity);
-            }
+            _dbContext.RegisteredUsers.Update(entity);
         }
     }
 }

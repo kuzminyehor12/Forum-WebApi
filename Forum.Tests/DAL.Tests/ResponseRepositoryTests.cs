@@ -57,66 +57,6 @@ namespace Forum.Tests.DAL.Tests
         }
 
         [TestMethod]
-        public async Task GetAll_WithMock_ShouldGetResponses()
-        {
-            _mockContext.Setup(r => r.Responses).Returns(_mockDbSet.Object);
-            IResponseRepository repo = new ResponseRepository(_mockContext.Object);
-
-            var entities = await repo.GetAllAsync();
-
-            Assert.AreEqual(entities, typeof(IEnumerable<Response>));
-            _mockContext.Verify(x => x.Responses.ToListAsync(It.IsAny<CancellationToken>()));
-        }
-
-        [TestMethod]
-        public async Task GetAllWithDetails_WithMock_ShouldGetResponsesWithDetails()
-        {
-            _mockContext.Setup(r => r.Responses).Returns(_mockDbSet.Object);
-            IResponseRepository repo = new ResponseRepository(_mockContext.Object);
-
-            var entities = await repo.GetAllAsync();
-
-            Assert.AreEqual(entities, typeof(IEnumerable<Response>));
-            _mockContext.Verify(x => x.Responses.Include(r => r.Author)
-                .Include(r => r.Topic)
-                .Include(r => r.Comments)
-                .Include(r => r.LikedBy)
-                .ThenInclude(lr => lr.Liker)
-                .ToListAsync(It.IsAny<CancellationToken>()));
-        }
-
-        [TestMethod]
-        public async Task GetById_WithMock_ShouldGetResponse()
-        {
-            _mockContext.Setup(r => r.Responses).Returns(_mockDbSet.Object);
-            IResponseRepository repo = new ResponseRepository(_mockContext.Object);
-            int id = 1;
-
-            var entity = await repo.GetByIdAsync(id);
-
-            Assert.AreEqual(entity, typeof(Response));
-            _mockContext.Verify(x => x.Responses.FindAsync(id));
-        }
-
-        [TestMethod]
-        public async Task GetByIdWithDetails_WithMock_ShouldGetResponseWithDetails()
-        {
-            _mockContext.Setup(r => r.Responses).Returns(_mockDbSet.Object);
-            IResponseRepository repo = new ResponseRepository(_mockContext.Object);
-            int id = 1;
-
-            var entity = await repo.GetByIdAsync(id);
-
-            Assert.AreEqual(entity, typeof(Response));
-            _mockContext.Verify(x => x.Responses.Include(r => r.Author)
-                .Include(r => r.Topic)
-                .Include(r => r.Comments)
-                .Include(r => r.LikedBy)
-                .ThenInclude(lr => lr.Liker)
-                .FirstAsync(c => c.Id == id, It.IsAny<CancellationToken>()));
-        }
-
-        [TestMethod]
         public void Update_WithMock_ShouldUpdateResponse()
         {
             _mockContext.Setup(r => r.Responses).Returns(_mockDbSet.Object);

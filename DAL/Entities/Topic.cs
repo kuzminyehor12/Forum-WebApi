@@ -15,8 +15,8 @@ namespace DAL.Entities
         public int Complaints { get; set; }
         public int? AuthorId { get; set; }
         public User Author { get; set; }
-        public ICollection<TopicTag> TopicTags { get; set; }
-        public ICollection<Response> Responses { get; set; }
-        public ICollection<LikerTopic> LikedBy { get; set; }
+        public virtual ICollection<TopicTag> TopicTags { get; set; }
+        public virtual ICollection<Response> Responses { get; set; }
+        public virtual ICollection<LikerTopic> LikedBy { get; set; }
     }
 }

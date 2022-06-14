@@ -63,12 +63,7 @@ namespace DAL.Repositories
 
         public void Update(Comment entity)
         {
-            Comment findingComment = _dbContext.Comments.Find(entity.Id);
-
-            if (findingComment != null)
-            {
-                _dbContext.Entry(findingComment).CurrentValues.SetValues(entity);
-            }
+            _dbContext.Comments.Update(entity);
         }
     }
 }

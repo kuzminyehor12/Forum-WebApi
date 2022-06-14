@@ -68,12 +68,7 @@ namespace DAL.Repositories
 
         public void Update(Topic entity)
         {
-            Topic findingTopic = _dbContext.Topics.Find(entity);
-
-            if (findingTopic != null)
-            {
-                _dbContext.Entry(findingTopic).CurrentValues.SetValues(entity);
-            }
+            _dbContext.Topics.Update(entity);
         }
     }
 }

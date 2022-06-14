@@ -57,8 +57,8 @@ namespace BLL.Services
 
         public async Task<IEnumerable<CommentModel>> GetCommentsByUserIdAsync(int userId)
         {
-            var users = await _uow.UserRepository.GetAllWithDetailsAsync();
-            return _mapper.Map<IEnumerable<CommentModel>>(users.Select(u => u.CreatedComments));
+            var user = await _uow.UserRepository.GetByIdWithDetailsAsync(userId);
+            return _mapper.Map<IEnumerable<CommentModel>>(user.CreatedComments);
         }
 
         public async Task<IEnumerable<UserCredentials>> GetCredentials()

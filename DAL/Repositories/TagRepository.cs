@@ -59,12 +59,7 @@ namespace DAL.Repositories
 
         public void Update(Tag entity)
         {
-            Tag findingTag = _dbContext.Tags.Find(entity.Id);
-
-            if (findingTag != null)
-            {
-                _dbContext.Entry(findingTag).CurrentValues.SetValues(entity);
-            }
+            _dbContext.Tags.Update(entity);
         }
     }
 }

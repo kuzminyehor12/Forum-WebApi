@@ -57,62 +57,6 @@ namespace Forum.Tests.DAL.Tests
         }
 
         [TestMethod]
-        public async Task GetAll_WithMock_ShouldGetComments()
-        {
-            _mockContext.Setup(c => c.Comments).Returns(_mockDbSet.Object);
-            ICommentRepository repo = new CommentRepository(_mockContext.Object);
-
-            var entities = await repo.GetAllAsync();
-
-            Assert.AreEqual(entities, typeof(IEnumerable<Comment>));
-            _mockContext.Verify(x => x.Comments.ToListAsync(It.IsAny<CancellationToken>()));
-        }
-
-        [TestMethod]
-        public async Task GetAllWithDetails_WithMock_ShouldGetCommentsWithDetails()
-        {
-            _mockContext.Setup(c => c.Comments).Returns(_mockDbSet.Object);
-            ICommentRepository repo = new CommentRepository(_mockContext.Object);
-
-            var entities = await repo.GetAllAsync();
-
-            Assert.AreEqual(entities, typeof(IEnumerable<Comment>));
-            _mockContext.Verify(x => x.Comments.Include(c => c.Author)
-                .Include(c => c.Response)
-                .ThenInclude(r => r.Topic)
-                .ToListAsync(It.IsAny<CancellationToken>()));
-        }
-
-        [TestMethod]
-        public async Task GetById_WithMock_ShouldGetComment()
-        {
-            _mockContext.Setup(c => c.Comments).Returns(_mockDbSet.Object);
-            ICommentRepository repo = new CommentRepository(_mockContext.Object);
-            int id = 1;
-
-            var entity = await repo.GetByIdAsync(id);
-
-            Assert.AreEqual(entity, typeof(Comment));
-            _mockContext.Verify(x => x.Comments.FindAsync(id));
-        }
-
-        [TestMethod]
-        public async Task GetByIdWithDetails_WithMock_ShouldGetCommentWithDetails()
-        {
-            _mockContext.Setup(c => c.Comments).Returns(_mockDbSet.Object);
-            ICommentRepository repo = new CommentRepository(_mockContext.Object);
-            int id = 1;
-
-            var entity = await repo.GetByIdAsync(id);
-
-            Assert.AreEqual(entity, typeof(Comment));
-            _mockContext.Verify(x => x.Comments.Include(c => c.Author)
-                .Include(c => c.Response)
-                .ThenInclude(r => r.Topic)
-                .FirstAsync(c => c.Id == id, It.IsAny<CancellationToken>()));
-        }
-
-        [TestMethod]
         public void Update_WithMock_ShouldUpdateComment()
         {
             _mockContext.Setup(c => c.Comments).Returns(_mockDbSet.Object);
