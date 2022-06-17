@@ -114,7 +114,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpPost("/response/like/add")]
+        [HttpPost("response/like/add")]
         [AuthorizeWithRole(Roles.AuthorizedUser, Roles.Moderator)]
         public async Task<ActionResult> LikeResponse([FromBody] LikerResponseModel model)
         {
@@ -129,7 +129,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpPost("/topic/like/add")]
+        [HttpPost("topic/like/add")]
         [AuthorizeWithRole(Roles.AuthorizedUser, Roles.Moderator)]
         public async Task<ActionResult> LikeTopic([FromBody] LikerTopicModel model)
         {
@@ -144,7 +144,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpPost("/response/like/remove")]
+        [HttpPost("response/like/remove")]
         [AuthorizeWithRole(Roles.AuthorizedUser, Roles.Moderator)]
         public async Task<ActionResult> RemoveLikeResponse([FromBody] LikerResponseModel model)
         {
@@ -159,7 +159,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpPost("/topic/like/remove")]
+        [HttpPost("topic/like/remove")]
         [AuthorizeWithRole(Roles.AuthorizedUser, Roles.Moderator)]
         public async Task<ActionResult> RemoveLikeTopic([FromBody] LikerTopicModel model)
         {
@@ -174,7 +174,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpPost("/token")]
+        [HttpPost("token")]
         [AllowAnonymous]
         public async Task<ActionResult> GetToken([FromBody] AuthenticationModel model)
         {
@@ -215,7 +215,7 @@ namespace WebApi.Controllers
             return Ok("Try again!");
         }
 
-        [HttpPost("/register")]
+        [HttpPost("register")]
         [AllowAnonymous]
         public async Task<ActionResult> Register([FromBody] UserModel model)
         {

@@ -37,7 +37,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpGet("/tags")]
+        [HttpGet("tags")]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<TagModel>>> GetTags()
         {
@@ -52,7 +52,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpGet("{tags}&{publicationDate}")]
+    [HttpGet("{tags}&{publicationDate}")]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<TopicModel>>> GetByFilter(IEnumerable<int> tags, DateTime? publicationDate)
         {
@@ -88,7 +88,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpGet("/sort/likes")]
+        [HttpGet("sort/likes")]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<TopicModel>>> GetSortedByLikes()
         {
@@ -103,7 +103,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpGet("/sort/date")]
+        [HttpGet("sort/date")]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<TopicModel>>> GetSortedByDate()
         {
@@ -132,7 +132,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpPost("/tag")]
+        [HttpPost("tag")]
         public async Task<ActionResult> AddTag([FromBody] TopicTagModel tag)
         {
             try
@@ -193,7 +193,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpDelete("/tag")]
+        [HttpDelete("tag")]
         public async Task<ActionResult> RemoveTag([FromBody] TopicTagModel tag)
         {
             try

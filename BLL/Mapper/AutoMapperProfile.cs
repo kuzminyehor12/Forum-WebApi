@@ -32,6 +32,7 @@ namespace BLL.Mapper
                .ForMember(um => um.LikedTopicIds, u => u.MapFrom(x => x.LikedTopics.Select(lt => 
                     new LikerTopicModel { UserId = lt.UserId, TopicId = lt.TopicId })))
                .ForMember(um => um.Email, u => u.MapFrom(x => x.UserCredentials.Email))
+               .ForMember(um => um.Nickname, u => u.MapFrom(x => x.UserCredentials.UserName))
                .ReverseMap();
 
             CreateMap<Tag, TagModel>()

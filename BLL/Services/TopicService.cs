@@ -96,7 +96,7 @@ namespace BLL.Services
 
         public async Task<IEnumerable<TagModel>> GetTags()
         {
-            var tags = await _uow.TagRepository.GetAllWithDetailsAsync();
+            var tags = await _uow.TagRepository.GetAllAsync();
             return _mapper.Map<IEnumerable<TagModel>>(tags);
         }
 
